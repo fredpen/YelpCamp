@@ -1,0 +1,26 @@
+.navbar{
+   background: black;
+   color: white;
+}
+
+.posts{
+   margin: 0 auto;
+   width: 70%;
+   /* border: 2px solid red; */
+   text-align: center;
+}
+
+.data{
+   display: flex;
+   border: 2px solid red;
+}
+
+.image-folder{
+   max-width: 50%;
+   margin-right: 2%;
+}
+
+/* .btn{
+   font-size: 100%;
+   padding: 1% 2%;
+} */
