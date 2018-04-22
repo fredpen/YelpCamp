@@ -12,7 +12,9 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(express.static("public"));
 app.set("view engine", "ejs");
-seedDb();
+
+// prepopulate our database with data
+// seedDb();
 // the homepage route
 app.get("/", function(req, res) {
    res.render("landing");
@@ -60,7 +62,6 @@ app.get("/campgrounds/:id", function(req, res) {
       req.params.id).populate("comments").exec(function(err, camp) {
       if (err) {
          console.log(err);
-         console.log("mine");
       } else {
          res.render("campgrounds/show", {
             campground: camp
@@ -76,14 +77,37 @@ app.get("/campgrounds/:id/comments/new", function(req, res) {
       function(err, camp) {
          if (err) {
             console.log(err);
-
          } else {
             res.render("comments/new", {
-               camp: camp
+               campground: camp
             })
          }
       })
 });
+
+// the post route for the comment
+app.post("/campgrounds/:id/comments", function(req, res) {
+   // find the Campground using
+   Campground.findById(req.params.id, function(err, campground) {
+      if (err) {
+         console.log(err);
+         res.redirect("/campgrounds")
+      } else {
+         Comments.create(req.body.comment, function(err, comment) {
+            if (err) {
+               console.log(err);
+            } else {
+               campground.comments.push(comment);
+               campground.save();
+               console.log(campground);
+               res.redirect("/campgrounds/" + campground._id);
+            }
+         });
+      }
+   });
+});
+
+
 
 app.listen(4000, function() {
    console.log("Yelp camp server is running");
