@@ -60,6 +60,7 @@ app.get("/campgrounds/:id", function(req, res) {
       req.params.id).populate("comments").exec(function(err, camp) {
       if (err) {
          console.log(err);
+         console.log("mine");
       } else {
          res.render("campgrounds/show", {
             campground: camp
@@ -70,14 +71,15 @@ app.get("/campgrounds/:id", function(req, res) {
 
 // the comment routes
 app.get("/campgrounds/:id/comments/new", function(req, res) {
-   Campgrounds.findById(
+   Campground.findById(
       req.params.id,
       function(err, camp) {
          if (err) {
             console.log(err);
+
          } else {
             res.render("comments/new", {
-               campground: camp
+               camp: camp
             })
          }
       })
