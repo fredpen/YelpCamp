@@ -3,17 +3,17 @@ var mongoose = require("mongoose"),
    Comments = require("./models/comment");
 
 var data = [{
-   name: "race",
+   name: "Golden prick Park, Abuja",
    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScywb_dWxB6Ft-OPvyAtx-QOTJ2TliWfjRpqGkju0D_9_UDqkT",
-   description: "nice place of leisure"
+   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. "
 }, {
-   name: "lovren",
+   name: "Olumk Rock, Abeokuta",
    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEjFcGe0CI0jRDFfyO4Il2b--70jPrGW8XwMh9Q90PE8tg7i-E",
-   description: "nice place of leisure"
+   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse"
 }, {
-   name: "batista",
+   name: "Erin Ijesa Waterfall, Ijesa",
    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0Pi_HUUj23OvY4mVTT3evZHnM0m4s0v23ZnL7lWZfN1Z4pSnsxg",
-   description: "nice place of leisure"
+   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex "
 }]
 
 
@@ -33,16 +33,15 @@ function seedDb() {
                   console.log("camp created");
                   // create commentsSchema
                   Comments.create({
-                     text: "oh, i love this place lots of great stuffs here",
-                     author: "malik damisa"
+                     text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor ",
+                     author: "Jane Dow"
                   }, function(err, comment) {
                      if (err) {
                         console.log(err);
                      } else {
-                        console.log("comment created");
+                        console.log(comment);
                         campground.comments.push(comment);
                         campground.save();
-                        console.log("comments is pushed");
                      }
                   })
                }

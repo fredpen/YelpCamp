@@ -10,11 +10,11 @@ mongoose.connect("mongodb://localhost/fred-camp-v4")
 app.use(bodyParser.urlencoded({
    extended: true
 }));
-app.use(express.static("public"));
+app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 // prepopulate our database with data
-// seedDb();
+seedDb();
 // the homepage route
 app.get("/", function(req, res) {
    res.render("landing");
@@ -99,14 +99,12 @@ app.post("/campgrounds/:id/comments", function(req, res) {
             } else {
                campground.comments.push(comment);
                campground.save();
-               console.log(campground);
                res.redirect("/campgrounds/" + campground._id);
             }
          });
       }
    });
 });
-
 
 
 app.listen(4000, function() {
