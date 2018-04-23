@@ -16,13 +16,15 @@
                <p>
                   <img class="img-responsive" src="<%= campground.image %>" alt="camps">
                </p>
-               <div class="caption-full">
-                  <h4><a href="#"><%= campground.name %></a> </h4>
-                  <h4>#19.00/night</h4>
+               <div class="intro">
+                  <div class="caption-full">
+                     <h4><a href="#"><%= campground.name %></a> </h4>
+                     <h4>#19.00/night</h4>
+                  </div>
+                  <p>
+                     <%= campground.description %>
+                  </p>
                </div>
-               <p>
-                  <%= campground.description %>
-               </p>
             </div>
             <div class="well well-lg">
                <div class="text-right marg">
