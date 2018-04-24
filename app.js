@@ -14,7 +14,7 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 // prepopulate our database with data
-seedDb();
+// seedDb();
 // the homepage route
 app.get("/", function(req, res) {
    res.render("landing");
