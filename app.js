@@ -6,7 +6,7 @@ var express = require("express"),
    Comments = require("./models/comment"),
    app = express();
 
-mongoose.connect("mongodb://localhost/fred-camp-v4")
+mongoose.connect("mongodb://localhost/fred-camp-v7")
 app.use(bodyParser.urlencoded({
    extended: true
 }));
@@ -14,7 +14,7 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 // prepopulate our database with data
-// seedDb();
+seedDb();
 // the homepage route
 app.get("/", function(req, res) {
    res.render("landing");
