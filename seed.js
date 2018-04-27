@@ -14,18 +14,6 @@ var data = [{
    name: "Arash Asghari",
    image: "/images/p4.jpg",
    description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex "
-}, {
-   name: "Lance Anderson",
-   image: "/images/p5.jpg",
-   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex "
-}, {
-   name: "Adrian Infernus",
-   image: "/images/p6.jpg",
-   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex "
-}, {
-   name: "Hakan Nural",
-   image: "/images/p7.jpg",
-   description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex "
 }]
 
 var data2 = [{
@@ -52,16 +40,15 @@ function seedDb() {
                   console.log("camp created");
                   // create commentsSchema
                   data2.forEach(function(data) {
-                     Comments.remove({}, function(err) {
-                        Comments.create(data, function(err, comment) {
-                           if (err) {
-                              console.log(err);
-                           } else {
-                              campground.comments.push(comment);
-                              campground.save();
-                           }
-                        });
-                     })
+                     Comments.create(data, function(err, comment) {
+                        if (err) {
+                           console.log(err);
+                        } else {
+                           console.log(campground.comments);
+                           campground.comments.push(comment);
+                           campground.save();
+                        }
+                     });
                   });
                }
             })
