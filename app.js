@@ -20,10 +20,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
-app.use(function(req, res, next) {
-   res.locals.activeUser = req.user;
-   next();
-})
+
 // prepopulate our database with data
 // seedDb();
 
@@ -39,6 +36,11 @@ app.use(passport.session());
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+app.use(function(req, res, next) {
+   res.locals.currentUser = req.user;
+   next();
+});
 // =====================================================
 // the homepage route
 app.get("/", function(req, res) {
@@ -51,15 +53,14 @@ app.get("/campgrounds", function(req, res) {
          console.log(err);
       } else {
          res.render("campgrounds/index", {
-            campground: allcamps,
-            activeUser: req.user
+            campground: allcamps
          });
       };
    });
 });
 
 // the post route to creating the campgrounds
-app.post("/campgrounds", function(req, res) {
+app.post("/campgrounds", isLoggedIn, function(req, res) {
    var name = req.body.name;
    var image = req.body.image;
    var description = req.body.description;
@@ -167,7 +168,7 @@ app.post("/login", passport.authenticate("local", {
 // the logout route
 app.get("/logout", function(req, res) {
    req.logout();
-   res.redirect("/campgrounds")
+   res.redirect("/campgrounds");
 });
 
 // the login middleware
@@ -175,8 +176,8 @@ function isLoggedIn(req, res, next) {
    if (req.isAuthenticated()) {
       return next();
    }
-   res.redirect("/login")
-}
+   res.redirect("/login");
+};
 
 
 
