@@ -7,7 +7,11 @@ var campgroundSchema = new mongoose.Schema({
    comments: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comments"
-   }]
+   }],
+   user: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User"
+   }
 
 });
 // set the Object into a varaiable we can use
