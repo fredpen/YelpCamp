@@ -1,8 +1,13 @@
 var express = require("express"),
    mongoose = require("mongoose"),
    bodyParser = require("body-parser"),
+   passport = require("passport"),
+   localStrategy = require("passport-local"),
+   passportLocalMongoose = require("passport-local-mongoose"),
+   expressSession = require("express-session"),
    Campground = require("./models/campground"),
    seedDb = require("./seed"),
+   User = require("./models/user"),
    Comments = require("./models/comment"),
    app = express();
 
@@ -14,7 +19,7 @@ app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 // prepopulate our database with data
-seedDb();
+// seedDb();
 // the homepage route
 app.get("/", function(req, res) {
    res.render("landing");
