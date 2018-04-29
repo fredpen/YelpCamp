@@ -7,6 +7,7 @@ var express = require("express"),
    bodyParser = require("body-parser"),
    Comments = require("./models/comment"),
    passport = require("passport"),
+   methodOverride = require("method-override")
    localStrategy = require("passport-local"),
    expressSession = require("express-session"),
    Campground = require("./models/campground"),
@@ -35,6 +36,7 @@ app.use(expressSession({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride("_method"));
 passport.use(new localStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
