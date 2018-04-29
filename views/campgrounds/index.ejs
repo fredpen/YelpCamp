@@ -19,6 +19,10 @@
                      <h5>
                         <%= campground.name  %>
                      </h5>
+                     <h5><em> Submitted by
+                           <%= campground.author.username  %>
+                        </em>
+                     </h5>
                      <p>
                         <a href=" /campgrounds/<%=campground._id  %> " class="btn btn-primary">More Info</a>
                      </p>
@@ -29,4 +33,4 @@
             <% }); %>
       </div>
    </div>
-   <% include ../partials/footer   %>
+   <% include ../partials/footer %>

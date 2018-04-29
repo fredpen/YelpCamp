@@ -25,16 +25,23 @@ router.post("/campgrounds", isLoggedIn, function(req, res) {
    var name = req.body.name;
    var image = req.body.image;
    var description = req.body.description;
+   var author = {
+      id: req.user._id,
+      username: req.user.username
+   }
    var newCampground = {
       name: name,
       image: image,
-      description: description
+      description: description,
+      author: author
    };
+
    Campground.create(newCampground, function(err, newcamp) {
       if (err) {
          console.log(err);
       } else {
          res.redirect("/campgrounds");
+         console.log(newcamp);
       }
    });
 });

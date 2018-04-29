@@ -8,11 +8,13 @@ var campgroundSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comments"
    }],
-   user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User"
+   author: {
+      id: {
+         type: mongoose.Schema.Types.ObjectId,
+         ref: "User"
+      },
+      username: String
    }
-
 });
 // set the Object into a varaiable we can use
 module.exports = mongoose.model("Campground", campgroundSchema);
