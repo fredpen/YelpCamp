@@ -1,5 +1,6 @@
 var express = require("express"),
    Campground = require("../models/campground"),
+   middlewareObj = require("../middleware/index"),
    router = express.Router();
 
 // the homepage route
@@ -21,7 +22,7 @@ router.get("/campgrounds", function(req, res) {
 });
 
 // the post route to creating the campgrounds
-router.post("/campgrounds", isLoggedIn, function(req, res) {
+router.post("/campgrounds", middlewareObj.isLoggedIn, function(req, res) {
    var name = req.body.name;
    var image = req.body.image;
    var description = req.body.description;
@@ -47,7 +48,7 @@ router.post("/campgrounds", isLoggedIn, function(req, res) {
 });
 
 // new show the form to add new camps
-router.get("/campgrounds/new", isLoggedIn, function(req, res) {
+router.get("/campgrounds/new", middlewareObj.isLoggedIn, function(req, res) {
    res.render("campgrounds/new");
 });
 
@@ -65,12 +66,36 @@ router.get("/campgrounds/:id", function(req, res) {
    })
 });
 
-// the login middleware
-function isLoggedIn(req, res, next) {
-   if (req.isAuthenticated()) {
-      return next();
-   }
-   res.redirect("/login");
-};
+// the campground edit route
+router.get("/campgrounds/:id/edit", middlewareObj.isLoggedIn, middlewareObj.isCampgroundOwner, function(req, res) {
+   Campground.findById(req.params.id, function(err, foundcamp) {
+      res.render("../views/campgrounds/edit", {
+         campground: foundcamp
+      })
+   });
+});
+
+// the campground edit post router
+router.put("/campgrounds/:id", middlewareObj.isLoggedIn, middlewareObj.isCampgroundOwner, function(req, res) {
+   Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, foundcamp) {
+      if (err) {
+         console.log(err);
+         res.redirect("back");
+      } else {
+         res.redirect("/campgrounds/" + req.params.id);
+      }
+   });
+});
+
+// the delete route
+router.delete("/campgrounds/:id/delete", middlewareObj.isLoggedIn, middlewareObj.isCampgroundOwner, function(req, res) {
+   Campground.findByIdAndRemove(req.params.id, function(err) {
+      if (err) {
+         res.redirect("/campgrounds")
+      } else {
+         res.redirect("/campgrounds")
+      }
+   });
+});
 
 module.exports = router;

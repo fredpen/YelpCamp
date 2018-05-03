@@ -1,0 +1,16 @@
+<% include ../partials/header %>
+
+   <div style="text-align:center;">
+      <h1>Edit comment</h1>
+      <div class="container" style="width:30%;">
+         <form action="/campgrounds/<%= campground_id %>/comments/<%= comments._id %>?_method=put" method="post">
+            <div class="form-group">
+               <input type="text" name="comments[text]" required="required" class="form-control" value="<%= comments.text %>" autofocus>
+            </div>
+            <button type=" submit " class="btn btn-primary " style="width:100% ">Submit</button>
+         </form>
+      </div>
+      <a href="/campgrounds ">Back</a>
+   </div>
+
+   <% include ../partials/footer %>
