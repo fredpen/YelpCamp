@@ -1,5 +1,6 @@
 var express = require("express"),
    app = express(),
+   flash = require("flash"),
    mongoose = require("mongoose"),
    passport = require("passport"),
    seedDb = require("./seed"),
@@ -7,7 +8,7 @@ var express = require("express"),
    bodyParser = require("body-parser"),
    Comments = require("./models/comment"),
    passport = require("passport"),
-   methodOverride = require("method-override")
+   methodOverride = require("method-override"),
    localStrategy = require("passport-local"),
    expressSession = require("express-session"),
    Campground = require("./models/campground"),
@@ -22,6 +23,7 @@ mongoose.connect("mongodb://localhost/fred-camp-v7")
 app.use(bodyParser.urlencoded({
    extended: true
 }));
+app.use(flash());
 app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
