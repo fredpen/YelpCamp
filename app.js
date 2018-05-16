@@ -1,6 +1,6 @@
 var express = require("express"),
    app = express(),
-   flash = require("flash"),
+   flash = require("connect-flash"),
    mongoose = require("mongoose"),
    passport = require("passport"),
    seedDb = require("./seed"),
@@ -45,6 +45,9 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
    res.locals.currentUser = req.user;
+   res.locals.error = req.flash("error")
+   res.locals.success = req.flash("success")
+   res.locals.info = req.flash("info")
    next();
 });
 

@@ -41,6 +41,7 @@ router.post("/campgrounds", middlewareObj.isLoggedIn, function(req, res) {
       if (err) {
          console.log(err);
       } else {
+         req.flash("success", "Campground succesfully created")
          res.redirect("/campgrounds");
          console.log(newcamp);
       }
@@ -49,7 +50,7 @@ router.post("/campgrounds", middlewareObj.isLoggedIn, function(req, res) {
 
 // new show the form to add new camps
 router.get("/campgrounds/new", middlewareObj.isLoggedIn, function(req, res) {
-   res.render("campgrounds/new");
+   res.render("campgrounds/new")
 });
 
 // the route that shows or give details about a specific camp
@@ -70,7 +71,7 @@ router.get("/campgrounds/:id", function(req, res) {
 router.get("/campgrounds/:id/edit", middlewareObj.isLoggedIn, middlewareObj.isCampgroundOwner, function(req, res) {
    Campground.findById(req.params.id, function(err, foundcamp) {
       res.render("../views/campgrounds/edit", {
-         campground: foundcamp
+         campground: foundcamp,
       })
    });
 });
@@ -82,6 +83,7 @@ router.put("/campgrounds/:id", middlewareObj.isLoggedIn, middlewareObj.isCampgro
          console.log(err);
          res.redirect("back");
       } else {
+         req.flash("success", "Campground succesfully edited")
          res.redirect("/campgrounds/" + req.params.id);
       }
    });
@@ -93,6 +95,7 @@ router.delete("/campgrounds/:id/delete", middlewareObj.isLoggedIn, middlewareObj
       if (err) {
          res.redirect("/campgrounds")
       } else {
+         req.flash("info", "Campground succesfully deleted")
          res.redirect("/campgrounds")
       }
    });

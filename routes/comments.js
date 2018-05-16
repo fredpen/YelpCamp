@@ -5,7 +5,7 @@ var express = require("express"),
    router = express.Router();
 
 // the comment routes
-router.get("/campgrounds/:id/comments/new", function(req, res) {
+router.get("/campgrounds/:id/comments/new", middlewareObj.isLoggedIn, function(req, res) {
    Campground.findById(
       req.params.id,
       function(err, camp) {
@@ -20,11 +20,12 @@ router.get("/campgrounds/:id/comments/new", function(req, res) {
 });
 
 // the post route for the comment
-router.post("/campgrounds/:id/comments", function(req, res) {
+router.post("/campgrounds/:id/comments", middlewareObj.isLoggedIn, function(req, res) {
    // find the Campground using
    Campground.findById(req.params.id, function(err, campground) {
       if (err) {
          console.log(err);
+         req.flash("error", "somehing went wrong")
          res.redirect("/campgrounds")
       } else {
          Comments.create(req.body.comment, function(err, comment) {
@@ -36,6 +37,7 @@ router.post("/campgrounds/:id/comments", function(req, res) {
                comment.save();
                campground.comments.push(comment);
                campground.save();
+               req.flash("sucess", "comment was added succesfully")
                res.redirect("/campgrounds/" + campground._id);
             }
          });
@@ -44,7 +46,7 @@ router.post("/campgrounds/:id/comments", function(req, res) {
 });
 
 // the comments edit route
-router.get("/campgrounds/:id/comments/:comments_id/edit", middlewareObj.isCommentOwner, function(req, res) {
+router.get("/campgrounds/:id/comments/:comments_id/edit", middlewareObj.isCommentOwner, middlewareObj.isLoggedIn, middlewareObj.isCommentOwner, function(req, res) {
    Comments.findById(req.params.comments_id, function(err, foundcomments) {
       if (err) {
          res.redirect("back");
@@ -59,11 +61,12 @@ router.get("/campgrounds/:id/comments/:comments_id/edit", middlewareObj.isCommen
 });
 
 // the comments update route
-router.put("/campgrounds/:id/comments/:comments_id", middlewareObj.isCommentOwner, function(req, res) {
+router.put("/campgrounds/:id/comments/:comments_id", middlewareObj.isLoggedIn, middlewareObj.isCommentOwner, function(req, res) {
    Comments.findByIdAndUpdate(req.params.comments_id, req.body.comments, function(err, updatedcomments) {
       if (err) {
          res.redirect("back")
       } else {
+         req.flash("success", "comment was edited succesfully")
          res.redirect("/campgrounds/" + req.params.id)
       }
    })
@@ -75,6 +78,7 @@ router.delete("/campgrounds/:id/comments/:comments_id/delete", middlewareObj.isC
       if (err) {
          res.redirect("back")
       } else {
+         req.flash("success", "comment was removed succesfully")
          res.redirect("back");
       }
    })

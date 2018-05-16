@@ -30,8 +30,8 @@
                   <li><a href="/login"> Log in </a></li>
                   <li><a href="/register"> Sign Up</a></li>
                   <%  } else { %>
-                     <li><a href="#">signed in as
-                        <%= currentUser.username.toUpperCase() %></a>
+                     <li><a class="text-capitalize" href="#">signed in as
+                        <%= currentUser.username %></a>
                      </li>
                      <li><a href="/logout"> LogOut</a></li>
                      <%  } %>
@@ -41,7 +41,22 @@
       </div>
       <!-- /.container-fluid -->
    </nav>
-   <div class="container jo" style="
-    margin-bottom: 55px;">
-
+   <div class="container jo" style="margin-bottom: 55px;"></div>
+   <div class="container">
+      <% if (error && error.length > 0) { %>
+         <div class="alert alert-danger">
+            <%= error %>
+               <%= console.log(error)%>
+         </div>
+         <% } %>
+            <% if (success && success.length > 0) { %>
+               <div class="alert alert-success">
+                  <%= success %>
+               </div>
+               <% } %>
+                  <% if (info && info.length > 0) { %>
+                     <div class="alert alert-info">
+                        <%= info %>
+                     </div>
+                     <% } %>
    </div>
